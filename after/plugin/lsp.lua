@@ -1,6 +1,6 @@
 local mapper = require("benson.keymap")
 local custom_lsp_attach = function()
-   -- Use LSP as the handler for omnifunc.
+    -- Use LSP as the handler for omnifunc.
     --    See `:help omnifunc` and `:help ins-completion` for more information.
     vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -11,30 +11,29 @@ local custom_lsp_attach = function()
     -- For plugins with an `on_attach` callback, call them here. For example:
     -- require('completion').on_attach()
 
-mapper.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
-mapper.nnoremap("K",     ":lua vim.lsp.buf.hover()<CR>")
-mapper.nnoremap("gD",    ":lua vim.lsp.buf.implementation()<CR>")
-mapper.nnoremap("<c-k>", ":lua vim.lsp.buf.signature_help()<CR>")
-mapper.nnoremap("1gD",   ":lua vim.lsp.buf.type_definition()<CR>")
-mapper.nnoremap("gr",    ":lua vim.lsp.buf.references()<CR>")
-mapper.nnoremap("g0",    ":lua vim.lsp.buf.document_symbol()<CR>")
-mapper.nnoremap("gW",    ":lua vim.lsp.buf.workspace_symbol()<CR>")
-mapper.nnoremap("<Leader>gd",  ":lua vim.lsp.buf.declaration()<CR>")
-mapper.nnoremap("<Leader>rn",    ":lua vim.lsp.buf.rename()<CR>")
-mapper.nnoremap("<Leader>ca",    ":lua vim.lsp.buf.code_action()<CR>")
-mapper.nnoremap("<Leader>cf",    ":lua vim.lsp.buf.format( { async = true} )<CR>")
-
+    mapper.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
+    mapper.nnoremap("K", ":lua vim.lsp.buf.hover()<CR>")
+    mapper.nnoremap("gD", ":lua vim.lsp.buf.implementation()<CR>")
+    mapper.nnoremap("<c-k>", ":lua vim.lsp.buf.signature_help()<CR>")
+    mapper.nnoremap("1gD", ":lua vim.lsp.buf.type_definition()<CR>")
+    mapper.nnoremap("gr", ":lua vim.lsp.buf.references()<CR>")
+    mapper.nnoremap("g0", ":lua vim.lsp.buf.document_symbol()<CR>")
+    mapper.nnoremap("gW", ":lua vim.lsp.buf.workspace_symbol()<CR>")
+    mapper.nnoremap("<Leader>gd", ":lua vim.lsp.buf.declaration()<CR>")
+    mapper.nnoremap("<Leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+    mapper.nnoremap("<Leader>ca", ":lua vim.lsp.buf.code_action()<CR>")
+    mapper.nnoremap("<Leader>cf", ":lua vim.lsp.buf.format( { async = true} )<CR>")
 end
 
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.clangd.setup({
-    cmd = { "clangd", "--completion-style=detailed" },
-    onAttach = custom_lsp_attach
+    cmd = { "clangd", "--completion-style=detailed", "--clang-tidy" },
+    on_attach = custom_lsp_attach
 })
 
 nvim_lsp.cmake.setup({
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach
 })
 
 nvim_lsp.rls.setup({
@@ -45,27 +44,27 @@ nvim_lsp.rls.setup({
             all_features = true,
         },
     },
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach
 })
 
 nvim_lsp.tsserver.setup({
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach
 })
 
 nvim_lsp.graphql.setup({
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach
 })
 
 nvim_lsp.java_language_server.setup {
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach
 }
 
 nvim_lsp.omnisharp.setup {
-    cmd = { "dotnet", "/home/benson/software/omnisharp-linux/OmniSharp.dll" },
+    cmd = { "dotnet", "C:/Users/benson/software/omnisharp/Omnisharp.dll" },
 
     -- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
-    enable_editorconfig_support = false,
+    enable_editorconfig_support = true,
 
     -- If true, MSBuild project system will only load projects for files that
     -- were opened in the editor. This setting is useful for big C# codebases
@@ -88,7 +87,7 @@ nvim_lsp.omnisharp.setup {
     -- have a negative impact on initial completion responsiveness,
     -- particularly for the first few completion sessions after opening a
     -- solution.
-    enable_import_completion = false,
+    enable_import_completion = true,
 
     -- Specifies whether to include preview versions of the .NET SDK when
     -- determining which version to use for project loading.
@@ -96,7 +95,9 @@ nvim_lsp.omnisharp.setup {
 
     -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
     -- true
-    analyze_open_documents_only = true,
+    analyze_open_documents_only = false,
+
+    on_attach = custom_lsp_attach,
 }
 
 
@@ -105,7 +106,7 @@ nvim_lsp.omnisharp.setup {
 
 -- set the path to the sumneko installation
 --  local system_name = "Linux" -- (Linux, macOS, or Windows)
-local sumneko_root_path = '/home/benson/software/sumneko'
+local sumneko_root_path = 'C:/Users/benson/software/lua-language-server'
 local sumneko_binary = sumneko_root_path .. "/bin" .. "/lua-language-server"
 
 nvim_lsp.sumneko_lua.setup({
@@ -138,4 +139,6 @@ nvim_lsp.sumneko_lua.setup({
 }
 )
 
-nvim_lsp.gopls.setup{}
+nvim_lsp.gopls.setup {
+    on_attach = custom_lsp_attach,
+}

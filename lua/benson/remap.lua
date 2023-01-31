@@ -17,6 +17,6 @@ mapper.nnoremap("<Leader>ds",   ":lua vim.diagnostic.open_float()<CR>")
 mapper.nnoremap("<Leader>m", ":make<CR>")
 
 --Telescope mappings
-mapper.nnoremap("<Leader>fc", ":Telescope find_files cwd=~/.config/nvim<CR>")
+mapper.nnoremap("<Leader>fc", ":Telescope find_files cwd=~/Appdata/local/nvim<CR>")
 mapper.nnoremap("<Leader>fb", ":Telescope buffers<CR>")
 mapper.nnoremap("<Leader>ff", ":Telescope find_files<CR>")
