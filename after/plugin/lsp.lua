@@ -1,40 +1,44 @@
 local mapper = require("benson.keymap")
-local custom_lsp_attach = function()
-   -- Use LSP as the handler for omnifunc.
+local custom_lsp_attach = function(client)
+    -- Use LSP as the handler for omnifunc.
     --    See `:help omnifunc` and `:help ins-completion` for more information.
     vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Use LSP as the handler for formatexpr.
     --    See `:help formatexpr` for more information.
-    vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+    vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr')
 
     -- For plugins with an `on_attach` callback, call them here. For example:
     -- require('completion').on_attach()
 
-mapper.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
-mapper.nnoremap("K",     ":lua vim.lsp.buf.hover()<CR>")
-mapper.nnoremap("gD",    ":lua vim.lsp.buf.implementation()<CR>")
-mapper.nnoremap("<c-k>", ":lua vim.lsp.buf.signature_help()<CR>")
-mapper.nnoremap("1gD",   ":lua vim.lsp.buf.type_definition()<CR>")
-mapper.nnoremap("gr",    ":lua vim.lsp.buf.references()<CR>")
-mapper.nnoremap("g0",    ":lua vim.lsp.buf.document_symbol()<CR>")
-mapper.nnoremap("gW",    ":lua vim.lsp.buf.workspace_symbol()<CR>")
-mapper.nnoremap("<Leader>gd",  ":lua vim.lsp.buf.declaration()<CR>")
-mapper.nnoremap("<Leader>rn",    ":lua vim.lsp.buf.rename()<CR>")
-mapper.nnoremap("<Leader>ca",    ":lua vim.lsp.buf.code_action()<CR>")
-mapper.nnoremap("<Leader>cf",    ":lua vim.lsp.buf.format( { async = true} )<CR>")
+    mapper.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
+    mapper.nnoremap("K", ":lua vim.lsp.buf.hover()<CR>")
+    mapper.nnoremap("gD", ":lua vim.lsp.buf.implementation()<CR>")
+    mapper.nnoremap("<c-k>", ":lua vim.lsp.buf.signature_help()<CR>")
+    mapper.nnoremap("1gD", ":lua vim.lsp.buf.type_definition()<CR>")
+    mapper.nnoremap("gr", ":lua vim.lsp.buf.references()<CR>")
+    mapper.nnoremap("g0", ":lua vim.lsp.buf.document_symbol()<CR>")
+    mapper.nnoremap("gW", ":lua vim.lsp.buf.workspace_symbol()<CR>")
+    mapper.nnoremap("<Leader>gd", ":lua vim.lsp.buf.declaration()<CR>")
+    mapper.nnoremap("<Leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+    mapper.nnoremap("<Leader>ca", ":lua vim.lsp.buf.code_action()<CR>")
+    mapper.nnoremap("<Leader>cf", ":lua vim.lsp.buf.format( { async = true} )<CR>")
 
+    if client.name == "omnisharp" then
+        client.server_capabilities.semanticTokensProvider = nil
+    end
 end
 
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.clangd.setup({
-    cmd = { "clangd", "--completion-style=detailed" },
-    onAttach = custom_lsp_attach
+    cmd = { "clangd", "--clang-tidy", "--completion-style=detailed"},
+    root_dir = nvim_lsp.util.root_pattern('compile_commands.json'),
+    on_attach = custom_lsp_attach,
 })
 
 nvim_lsp.cmake.setup({
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach,
 })
 
 nvim_lsp.rls.setup({
@@ -45,23 +49,23 @@ nvim_lsp.rls.setup({
             all_features = true,
         },
     },
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach,
 })
 
 nvim_lsp.tsserver.setup({
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach,
 })
 
 nvim_lsp.graphql.setup({
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach,
 })
 
 nvim_lsp.java_language_server.setup {
-    onAttach = custom_lsp_attach
+    on_attach = custom_lsp_attach,
 }
 
 nvim_lsp.omnisharp.setup {
-    cmd = { "dotnet", "/home/benson/software/omnisharp-linux/OmniSharp.dll" },
+    cmd = { "omnisharp" },
 
     -- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
@@ -97,6 +101,8 @@ nvim_lsp.omnisharp.setup {
     -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
     -- true
     analyze_open_documents_only = true,
+
+    on_attach = custom_lsp_attach,
 }
 
 
@@ -105,20 +111,16 @@ nvim_lsp.omnisharp.setup {
 
 -- set the path to the sumneko installation
 --  local system_name = "Linux" -- (Linux, macOS, or Windows)
-local sumneko_root_path = '/home/benson/software/sumneko'
-local sumneko_binary = sumneko_root_path .. "/bin" .. "/lua-language-server"
+nvim_lsp.gopls.setup {
+    on_attach = custom_lsp_attach
+}
 
-nvim_lsp.sumneko_lua.setup({
-    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" };
-    -- An example of settings for an LSP server.
-    --    For more options, see nvim-lspconfig
+nvim_lsp.lua_ls.setup {
     settings = {
         Lua = {
             runtime = {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                 version = 'LuaJIT',
-                -- Setup your lua path
-                path = vim.split(package.path, ';'),
             },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
@@ -126,16 +128,24 @@ nvim_lsp.sumneko_lua.setup({
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                },
+                library = vim.api.nvim_get_runtime_file("", true),
             },
-        }
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+            
+            format = {
+      enable = true,
+      -- Put format options here
+      -- NOTE: the value should be String!
+      defaultConfig = {
+        indent_style = "space",
+        indent_size = "2",
+      } 
+        },
     },
-
-    on_attach = custom_lsp_attach
+    }
 }
-)
 
-nvim_lsp.gopls.setup{}
+nvim_lsp.marksman.setup{}

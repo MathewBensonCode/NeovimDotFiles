@@ -20,3 +20,6 @@ mapper.nnoremap("<Leader>m", ":make<CR>")
 mapper.nnoremap("<Leader>fc", ":Telescope find_files cwd=~/.config/nvim<CR>")
 mapper.nnoremap("<Leader>fb", ":Telescope buffers<CR>")
 mapper.nnoremap("<Leader>ff", ":Telescope find_files<CR>")
+
+--Terminal mappings
+mapper.tnoremap("<Esc>", "<C-bSlash><C-N>")

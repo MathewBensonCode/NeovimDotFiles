@@ -3,7 +3,7 @@ local darktheme = require('onedark')
 
 darktheme.setup  {
     -- Main options --
-    style = 'light', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+    style = 'dark', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
     transparent = true,  -- Show/hide background
     term_colors = true, -- Change terminal color as per the selected theme style
     ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
@@ -43,3 +43,10 @@ darktheme.setup  {
 
 darktheme.load()
 
+function ColorMyPencils(color)
+    color = color or "rose-pine"
+    vim.cmd.colorscheme(color)
+
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none"})
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none"})
+end
