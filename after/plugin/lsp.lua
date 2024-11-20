@@ -2,11 +2,12 @@ local mapper = require("benson.keymap")
 local custom_lsp_attach = function(client)
     -- Use LSP as the handler for omnifunc.
     --    See `:help omnifunc` and `:help ins-completion` for more information.
-    vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    vim.api.buf.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Use LSP as the handler for formatexpr.
     --    See `:help formatexpr` for more information.
-    vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr')
+    vim.api.buf.nvim_set_option_value('formatexpr', 'v:lua.vim.lsp.formatexpr')
 
     -- For plugins with an `on_attach` callback, call them here. For example:
     -- require('completion').on_attach()
@@ -32,7 +33,7 @@ end
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.clangd.setup({
-    cmd = { "clangd", "--clang-tidy", "--completion-style=detailed"},
+    cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
     root_dir = nvim_lsp.util.root_pattern('compile_commands.json'),
     on_attach = custom_lsp_attach,
 })
@@ -65,7 +66,7 @@ nvim_lsp.java_language_server.setup {
 }
 
 nvim_lsp.omnisharp.setup {
-    cmd = { "omnisharp" },
+    cmd = { "/usr/bin/omnisharp" },
 
     -- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
@@ -106,11 +107,6 @@ nvim_lsp.omnisharp.setup {
 }
 
 
--- An example of configuring for `sumneko_lua`,
---  a language server for Lua.
-
--- set the path to the sumneko installation
---  local system_name = "Linux" -- (Linux, macOS, or Windows)
 nvim_lsp.gopls.setup {
     on_attach = custom_lsp_attach
 }
@@ -134,18 +130,18 @@ nvim_lsp.lua_ls.setup {
             telemetry = {
                 enable = false,
             },
-            
+
             format = {
-      enable = true,
-      -- Put format options here
-      -- NOTE: the value should be String!
-      defaultConfig = {
-        indent_style = "space",
-        indent_size = "2",
-      } 
+                enable = true,
+                -- Put format options here
+                -- NOTE: the value should be String!
+                defaultConfig = {
+                    indent_style = "space",
+                    indent_size = "2",
+                }
+            },
         },
-    },
     }
 }
 
-nvim_lsp.marksman.setup{}
+nvim_lsp.marksman.setup {}
