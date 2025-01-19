@@ -1,16 +1,17 @@
-local mapper = require("benson.keymap")
 local custom_lsp_attach = function(client)
     -- Use LSP as the handler for omnifunc.
     --    See `:help omnifunc` and `:help ins-completion` for more information.
 
-    vim.api.buf.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
 
     -- Use LSP as the handler for formatexpr.
     --    See `:help formatexpr` for more information.
-    vim.api.buf.nvim_set_option_value('formatexpr', 'v:lua.vim.lsp.formatexpr')
+    vim.api.nvim_set_option_value('formatexpr', 'v:lua.vim.lsp.formatexpr', {})
 
     -- For plugins with an `on_attach` callback, call them here. For example:
     -- require('completion').on_attach()
+
+    local mapper = require("benson.keymap")
 
     mapper.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
     mapper.nnoremap("K", ":lua vim.lsp.buf.hover()<CR>")
@@ -33,8 +34,8 @@ end
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.clangd.setup({
-    cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
-    root_dir = nvim_lsp.util.root_pattern('compile_commands.json'),
+    cmd = { "clangd", "--clang-tidy", "--experimental-modules-support", "--completion-style=detailed" },
+    root_dir = nvim_lsp.util.root_pattern('./compile_commands.json'),
     on_attach = custom_lsp_attach,
 })
 
@@ -53,7 +54,7 @@ nvim_lsp.rls.setup({
     on_attach = custom_lsp_attach,
 })
 
-nvim_lsp.tsserver.setup({
+nvim_lsp.ts_ls.setup({
     on_attach = custom_lsp_attach,
 })
 
