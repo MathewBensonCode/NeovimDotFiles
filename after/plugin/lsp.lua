@@ -34,8 +34,8 @@ end
 local nvim_lsp = require('lspconfig')
 
 nvim_lsp.clangd.setup({
-    cmd = { "clangd", "--clang-tidy", "--experimental-modules-support", "--completion-style=detailed" },
-    root_dir = nvim_lsp.util.root_pattern('./compile_commands.json'),
+    cmd = { "clangd", "--background-index", "--experimental-modules-support", "--completion-style=detailed" },
+    root_dir = nvim_lsp.util.root_pattern('compile_commands.json'),
     on_attach = custom_lsp_attach,
 })
 
@@ -67,7 +67,7 @@ nvim_lsp.java_language_server.setup {
 }
 
 nvim_lsp.omnisharp.setup {
-    cmd = { "/usr/bin/omnisharp" },
+    cmd = { "omnisharp" },
 
     -- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
@@ -146,3 +146,5 @@ nvim_lsp.lua_ls.setup {
 }
 
 nvim_lsp.marksman.setup {}
+
+nvim_lsp.pylsp.setup {}

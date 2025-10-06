@@ -40,12 +40,12 @@ mapper.tnoremap("<Esc>", "<C-bSlash><C-N>")
 
 
 -- locationlist mapping
-mapper.nnoremap("<Leader>o", ":lopen<CR>")
-mapper.nnoremap("<Leader>]", ":lnext<CR>")
-mapper.nnoremap("<Leader>[", ":lprev<CR>")
-
--- QuickFixlist mapping
-mapper.nnoremap("<C-T>", ":copen<CR>")
-mapper.nnoremap("<C-H>", ":cclose<CR>")
-mapper.nnoremap("<C-]>", ":cnext<CR>")
-mapper.nnoremap("<C-[>", ":cprev<CR>")
+--mapper.nnoremap("<Leader>o", ":lopen<CR>")
+--mapper.nnoremap("<Leader>]", ":lnext<CR>")
+--mapper.nnoremap("<Leader>[", ":lprev<CR>")
+--
+---- QuickFixlist mapping
+--mapper.nnoremap("<C-T>", ":copen<CR>")
+--mapper.nnoremap("<C-H>", ":cclose<CR>")
+--mapper.nnoremap("<C-]>", ":cnext<CR>")
+--mapper.nnoremap("<C-[>", ":cprev<CR>")

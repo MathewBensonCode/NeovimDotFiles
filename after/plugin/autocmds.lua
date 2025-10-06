@@ -1,10 +1,10 @@
 local lspgroup = vim.api.nvim_create_augroup("lspgroup", {clear = true})
 
--- vim.api.nvim_create_autocmd("BufWritePre", {
+--vim.api.nvim_create_autocmd("BufWritePre", {
 --     group = lspgroup,
 --     pattern = {"*.c*", "*.h*"},
---     callback = function()
---         vim.lsp.buf.format()
+--   callback = function()
+--       vim.lsp.buf.format()
 --     end
 -- })
 
