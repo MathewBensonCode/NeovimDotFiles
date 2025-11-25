@@ -31,19 +31,34 @@ local custom_lsp_attach = function(client)
     end
 end
 
-local nvim_lsp = require('lspconfig')
+vim.lsp.config('*', {
+    root_markers = { '.git' },
+})
 
-nvim_lsp.clangd.setup({
+vim.lsp.config('*', {
+    capabilities = {
+        textDocument = {
+            semanticTokens = {
+                multilineTokenSupport = true,
+            }
+        }
+    }
+})
+
+vim.lsp.config.clangd = {
     cmd = { "clangd", "--background-index", "--experimental-modules-support", "--completion-style=detailed" },
-    root_dir = nvim_lsp.util.root_pattern('compile_commands.json'),
+    root_markers = {'.clangd', 'compile_commands.json'},
+    filetypes = { 'c', 'cpp' },
     on_attach = custom_lsp_attach,
-})
+}
 
-nvim_lsp.cmake.setup({
+vim.lsp.enable('clangd')
+
+vim.lsp.config.cmake = {
     on_attach = custom_lsp_attach,
-})
+}
 
-nvim_lsp.rls.setup({
+vim.lsp.config.rls = {
     settings = {
         rust = {
             unstable_features = true,
@@ -52,21 +67,21 @@ nvim_lsp.rls.setup({
         },
     },
     on_attach = custom_lsp_attach,
-})
+}
 
-nvim_lsp.ts_ls.setup({
-    on_attach = custom_lsp_attach,
-})
-
-nvim_lsp.graphql.setup({
-    on_attach = custom_lsp_attach,
-})
-
-nvim_lsp.java_language_server.setup {
+vim.lsp.config.ts_ls = {
     on_attach = custom_lsp_attach,
 }
 
-nvim_lsp.omnisharp.setup {
+vim.lsp.config.graphql = {
+    on_attach = custom_lsp_attach,
+}
+
+vim.lsp.config.java_language_server =  {
+    on_attach = custom_lsp_attach,
+}
+
+vim.lsp.config.omnisharp =  {
     cmd = { "omnisharp" },
 
     -- Enables support for reading code style, naming convention and analyzer
@@ -108,11 +123,11 @@ nvim_lsp.omnisharp.setup {
 }
 
 
-nvim_lsp.gopls.setup {
+vim.lsp.config.gopls =  {
     on_attach = custom_lsp_attach
 }
 
-nvim_lsp.lua_ls.setup {
+vim.lsp.config.lua_ls =  {
     settings = {
         Lua = {
             runtime = {
@@ -144,7 +159,3 @@ nvim_lsp.lua_ls.setup {
         },
     }
 }
-
-nvim_lsp.marksman.setup {}
-
-nvim_lsp.pylsp.setup {}
