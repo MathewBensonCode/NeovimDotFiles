@@ -15,20 +15,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-   'navarasu/onedark.nvim',
-     'tpope/vim-fugitive',
-     { 'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim'} },
-     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-     {'nvim-treesitter/nvim-treesitter', config=function()
-     vim.cmd('TSUpdate')
- end
-     },
-     {'nvim-telescope/telescope-dap.nvim'},
-     'neovim/nvim-lspconfig',
-     'nvim-lua/plenary.nvim',
-     'nvim-lualine/lualine.nvim',
-     'rose-pine/neovim',
-     'mfussenegger/nvim-dap',
-     'mfussenegger/nvim-lint',
-     {'michaelrommel/nvim-silicon', lazy=true, cmd="Silicon" },
-   })
+   spec = {
+     {import = "benson.plugin_config"},
+   },
+})
