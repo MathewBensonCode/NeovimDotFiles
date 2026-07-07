@@ -18,4 +18,7 @@ require("lazy").setup({
    spec = {
      {import = "benson.plugin_config"},
    },
+   rocks = {
+       enabled = false
+   },
 })
