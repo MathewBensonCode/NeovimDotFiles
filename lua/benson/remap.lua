@@ -3,7 +3,11 @@ vim.keymap.set("n", "<C-l>", ":nohlsearch <bar> redraw<CR>")
 vim.keymap.set("i", "<C-l>", "<C-O>:nohlsearch <bar> redraw<CR>")
 
 --show diagnostics in a float
+<<<<<<< HEAD
 vim.keymap.set('n', '<Leader>ds', vim.diagnostic.open_float)
+=======
+vim.keymap.set('n', '<Leader>ds', 'vim.diagnostic.open_float()')
+>>>>>>> a729710 (smallacera modernize and update completion)
 
 --make
 vim.keymap.set("n", "<Leader>m", ":make<CR>")
