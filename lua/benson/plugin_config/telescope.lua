@@ -10,12 +10,17 @@ return {
         config = function()
             local mytelescope = require('telescope')
 
-            mytelescope.setup()
+            mytelescope.setup(
+                {
+                    extensions = {
+                        fzf = {}
+                    }
+                }
+            )
 
             -- To get fzf loaded and working with telescope, you need to call
             -- load_extension, somewhere after setup function:
             mytelescope.load_extension('fzf')
-            mytelescope.load_extension('dap')
 
             local builtin = require('telescope.builtin')
 
