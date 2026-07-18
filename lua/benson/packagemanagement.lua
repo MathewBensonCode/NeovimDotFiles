@@ -15,19 +15,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-<<<<<<< HEAD
     spec = {
         { import = "benson.plugin_config" },
     },
     rocks = {
         enabled = false
     },
-=======
-   spec = {
-     {import = "benson.plugin_config"},
-   },
-   rocks = {
-       enabled = false
-   },
->>>>>>> a729710 (smallacera modernize and update completion)
 })
