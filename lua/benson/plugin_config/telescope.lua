@@ -21,7 +21,9 @@ return {
 
             local builtin = require('telescope.builtin')
 
-            vim.keymap.set('n', '<leader>fc', 'builtin.find_files({ cwd =/home/benson/.config/nvim })',
+            vim.keymap.set('n', '<leader>fc', function()
+                    builtin.find_files({ cwd = '/home/benson/.config/nvim' })
+                end,
                 { desc = 'Telescope find config files' })
             vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope Find Buffers' })
             vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope Find Files' })

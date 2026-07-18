@@ -4,17 +4,13 @@ return {
         config = function()
             local cattpuccin = require("catppuccin")
             cattpuccin.setup({
-                flavour = "latte", -- latte, frappe, macchiato, mocha
-                background = {     -- :h background
-                    light = "latte",
-                    dark = "macchiato",
-                },
+                flavour = "mocha",             -- latte, frappe, macchiato, mocha
                 transparent_background = true, -- disables setting the background color.
                 float = {
                     transparent = false,       -- enable transparent floating windows
                     solid = false,             -- use solid styling for floating windows, see |winborder|
                 },
-                term_colors = false,           -- sets terminal colors (e.g. `g:terminal_color_0`)
+                term_colors = true,            -- sets terminal colors (e.g. `g:terminal_color_0`)
                 dim_inactive = {
                     enabled = false,           -- dims the background color of inactive window
                     shade = "dark",
