@@ -1,6 +1,3 @@
--- Go to NetRW file explorer
-vim.keymap.set("n", "<C-p>", ":Ex<CR>")
-
 -- Use <C-L> to clear search highlighting as well as refresh the screen
 vim.keymap.set("n", "<C-l>", ":nohlsearch <bar> redraw<CR>")
 vim.keymap.set("i", "<C-l>", "<C-O>:nohlsearch <bar> redraw<CR>")
