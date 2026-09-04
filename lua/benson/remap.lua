@@ -8,7 +8,5 @@ vim.keymap.set('n', '<Leader>ds', vim.diagnostic.open_float)
 --make
 vim.keymap.set("n", "<Leader>m", ":make<CR>")
 
--- Telescope mappings
-
 --Terminal mappings
-vim.keymap.set("t", "<Esc>", "<C-bSlash><C-N>")
+vim.keymap.set("t", "<Esc><Esc>", "<C-bSlash><C-N>")
