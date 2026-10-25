@@ -27,6 +27,10 @@ return {
                     builtin.find_files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
                 end,
                 { desc = 'Telescope find package files' })
+            vim.keymap.set('n', '<leader>fm', function()
+                    builtin.find_files({ cwd = "/usr/lib/cmake" })
+                end,
+                { desc = 'Telescope find CMake Packages' })
             vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope Find Buffers' })
             vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope Find Files' })
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope Find Help' })

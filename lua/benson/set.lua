@@ -11,6 +11,7 @@ vim.opt.hidden = true
 vim.opt.completeopt = "menuone,noselect,noinsert"
 vim.opt.path = "**"
 vim.opt.swapfile = false
+vim.opt.linebreak = true
 
 --global settings
 vim.g.netrw_banner = 0

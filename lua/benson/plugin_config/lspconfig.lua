@@ -14,6 +14,7 @@ return {
             vim.lsp.enable('ts_ls')
             vim.lsp.enable('cmake')
             vim.lsp.enable('csharp_ls')
+            vim.lsp.enable('marksman')
 
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('my.lsp', {}),
